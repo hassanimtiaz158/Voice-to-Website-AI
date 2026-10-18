@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres:16
+    env_file: .env
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: ./apps/api
+    env_file: .env
+    ports: ["8000:8000"]
+    volumes: [workspaces:/data/workspaces]
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+
+  worker:
+    build: ./apps/api
+    command: arq app.workers.worker.WorkerSettings
+    env_file: .env
+    volumes:
+      - workspaces:/data/workspaces
+      # sandbox needs Docker. This socket mount is root-equivalent: for local dev only.
+      # In production run the sandbox on a separate host/runner (see infra/).
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+
+  web:
+    build: ./apps/web
+    ports: ["8080:80"]
+    depends_on: [api]
+
+volumes:
+  pgdata:
+  workspaces:
