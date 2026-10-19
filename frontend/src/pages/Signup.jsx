@@ -9,6 +9,7 @@ import { PasswordStrength } from "../components/PasswordStrength";
 import { PhoneInput } from "../components/PhoneInput";
 import { useAuthForm } from "../hooks/useAuthForm";
 import { signUp, toAuthErrorMessage } from "../services/authService";
+import { useAuth } from "../store/auth";
 import {
   toE164,
   validateCheckbox,
@@ -21,6 +22,7 @@ import {
 
 export function Signup() {
   const navigate = useNavigate();
+  const setPendingEmail = useAuth((state) => state.setPendingEmail);
 
   const {
     values,
@@ -53,23 +55,16 @@ export function Signup() {
     },
     onSubmit: async (fields) => {
       const email = String(fields.email).trim().toLowerCase();
-      const result = await signUp({
+      await signUp({
         fullName: String(fields.fullName),
         email,
         password: String(fields.password),
         phoneNumber: toE164(String(fields.phoneDialCode), String(fields.phoneNumber)),
       });
       // The API always answers with the same generic line, so a taken email
-      // stays private. Then send the visitor to sign in.
-      return (
-        <span>
-          {result.message ??
-            "If that email is available, a 6-digit verification code is on its way."}{" "}
-          <button className="btn-link" onClick={() => navigate("/login")} type="button">
-            Continue to sign in
-          </button>
-        </span>
-      );
+      // stays private. Move on to the verification step either way.
+      setPendingEmail(email);
+      navigate("/verify-email", { replace: true });
     },
     invalidMessage: "Please check the highlighted fields before creating your account.",
   });

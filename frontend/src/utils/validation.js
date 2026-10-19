@@ -39,6 +39,16 @@ export function validateCheckbox(accepted) {
   return accepted ? undefined : "You must accept the terms to continue.";
 }
 
+export const OTP_LENGTH = 6;
+
+export function validateOtp(value) {
+  const code = String(value ?? "").trim();
+  if (!code) return "Enter the 6-digit code from your email.";
+  if (!/^\d+$/.test(code)) return "The code contains only digits.";
+  if (code.length !== OTP_LENGTH) return `Enter the full ${OTP_LENGTH}-digit code.`;
+  return undefined;
+}
+
 export function validatePhone(national) {
   const digits = String(national ?? "").replace(/[\s()-]/g, "");
   if (!digits) return "Phone number is required.";

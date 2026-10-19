@@ -6,13 +6,14 @@ import { AuthCheckbox } from "../components/AuthCheckbox";
 import { AuthInput } from "../components/AuthInput";
 import { AuthLayout } from "../components/AuthLayout";
 import { useAuthForm } from "../hooks/useAuthForm";
-import { signIn, toAuthErrorMessage } from "../services/authService";
+import { isUnverifiedError, signIn, toAuthErrorMessage } from "../services/authService";
 import { useAuth } from "../store/auth";
 import { validateEmail, validatePassword } from "../utils/validation";
 
 export function Login() {
   const navigate = useNavigate();
   const setUser = useAuth((state) => state.setUser);
+  const setPendingEmail = useAuth((state) => state.setPendingEmail);
 
   const {
     values,
@@ -32,13 +33,24 @@ export function Login() {
       password: (value) => validatePassword(String(value)),
     },
     onSubmit: async (fields) => {
-      const user = await signIn({
-        email: String(fields.email),
-        password: String(fields.password),
-        remember: Boolean(fields.remember),
-      });
-      setUser(user);
-      navigate("/", { replace: true });
+      const email = String(fields.email);
+      try {
+        const user = await signIn({
+          email,
+          password: String(fields.password),
+          remember: Boolean(fields.remember),
+        });
+        setUser(user);
+        navigate("/", { replace: true });
+      } catch (error) {
+        // A 403 means the account exists but hasn't confirmed its email yet.
+        if (isUnverifiedError(error)) {
+          setPendingEmail(email.trim().toLowerCase());
+          navigate("/verify-email", { replace: true });
+          return;
+        }
+        throw error;
+      }
     },
   });
 

@@ -34,6 +34,30 @@ export function signOut() {
   return api("/auth/logout", { method: "POST" });
 }
 
+export function verifyEmail(input) {
+  return api("/auth/verify-email", {
+    method: "POST",
+    body: JSON.stringify({
+      email: input.email.trim().toLowerCase(),
+      code: input.code,
+    }),
+  });
+}
+
+export function resendVerificationCode(input) {
+  return api("/auth/resend-code", {
+    method: "POST",
+    body: JSON.stringify({
+      email: input.email.trim().toLowerCase(),
+    }),
+  });
+}
+
+/** True when a failure means the account still needs email verification. */
+export function isUnverifiedError(error) {
+  return error instanceof ApiError && error.status === 403;
+}
+
 export function toAuthErrorMessage(error, fallback = GENERIC_LOGIN_ERROR) {
   if (error instanceof ApiError) {
     switch (error.status) {
