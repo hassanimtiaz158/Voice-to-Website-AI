@@ -2,7 +2,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { forwardRef, useId, useState } from "react";
 
 export const AuthInput = forwardRef(function AuthInput(
-  { label, icon: Icon, error, hint, type = "text", ...rest },
+  { label, icon: Icon, error, hint, trailing, type = "text", ...rest },
   ref
 ) {
   const generatedId = useId();
@@ -14,6 +14,7 @@ export const AuthInput = forwardRef(function AuthInput(
   const describedBy = [error ? errorId : undefined, hint ? hintId : undefined]
     .filter(Boolean)
     .join(" ");
+  const rightPad = isPassword && trailing ? "pr-20" : isPassword || trailing ? "pr-12" : "";
 
   return (
     <div>
@@ -32,12 +33,21 @@ export const AuthInput = forwardRef(function AuthInput(
           ref={ref}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy || undefined}
-          className={`auth-field ${Icon ? "pl-11" : ""} ${isPassword ? "pr-12" : ""} ${
+          className={`auth-field ${Icon ? "pl-11" : ""} ${rightPad} ${
             error ? "auth-field--invalid" : ""
           }`}
           id={generatedId}
           type={inputType}
         />
+        {trailing ? (
+          <div
+            className={`absolute top-1/2 flex -translate-y-1/2 items-center ${
+              isPassword ? "right-11" : "right-2"
+            }`}
+          >
+            {trailing}
+          </div>
+        ) : null}
         {isPassword ? (
           <button
             aria-label={revealed ? "Hide password" : "Show password"}

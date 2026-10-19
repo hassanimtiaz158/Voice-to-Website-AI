@@ -1,4 +1,4 @@
-import { CheckCircle2, Lock, Mail, User } from "lucide-react";
+import { CheckCircle2, Lock, Mail, Sparkles, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthAlert } from "../components/AuthAlert";
 import { AuthButton } from "../components/AuthButton";
@@ -19,6 +19,7 @@ import {
   validatePhone,
   validateRequiredName,
 } from "../utils/validation";
+import { generateStrongPassword } from "../utils/password";
 
 export function Signup() {
   const navigate = useNavigate();
@@ -69,6 +70,12 @@ export function Signup() {
     invalidMessage: "Please check the highlighted fields before creating your account.",
   });
 
+  function suggestPassword() {
+    const generated = generateStrongPassword();
+    setValue("password", generated);
+    setValue("confirmPassword", generated);
+  }
+
   return (
     <AuthLayout>
       <div className="animate-fade-rise rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-card backdrop-blur sm:p-8">
@@ -103,7 +110,7 @@ export function Signup() {
           />
 
           <AuthInput
-            autoComplete="email"
+            autoComplete="username"
             error={errors.email}
             icon={Mail}
             label="Email address"
@@ -134,6 +141,18 @@ export function Signup() {
               onBlur={() => handleBlur("password")}
               onChange={(event) => setValue("password", event.target.value)}
               placeholder="At least 10 characters"
+              trailing={
+                <button
+                  aria-label="Suggest a strong password"
+                  className="rounded-lg p-2 text-slate-400 transition hover:bg-white/5 hover:text-brand-cyan"
+                  onClick={suggestPassword}
+                  style={{ touchAction: "manipulation" }}
+                  title="Suggest a strong password"
+                  type="button"
+                >
+                  <Sparkles aria-hidden="true" className="h-5 w-5" />
+                </button>
+              }
               type="password"
               value={String(values.password)}
             />
