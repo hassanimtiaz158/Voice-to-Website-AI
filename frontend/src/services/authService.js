@@ -53,6 +53,26 @@ export function resendVerificationCode(input) {
   });
 }
 
+export function forgotPassword(input) {
+  return api("/auth/forgot-password", {
+    method: "POST",
+    body: JSON.stringify({
+      email: input.email.trim().toLowerCase(),
+    }),
+  });
+}
+
+export function resetPassword(input) {
+  return api("/auth/reset-password", {
+    method: "POST",
+    body: JSON.stringify({
+      email: input.email.trim().toLowerCase(),
+      code: input.code,
+      password: input.password,
+    }),
+  });
+}
+
 /** True when a failure means the account still needs email verification. */
 export function isUnverifiedError(error) {
   return error instanceof ApiError && error.status === 403;

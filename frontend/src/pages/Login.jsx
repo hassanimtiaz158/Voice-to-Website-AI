@@ -19,7 +19,6 @@ export function Login() {
     values,
     errors,
     alert,
-    setAlert,
     setValue,
     handleBlur,
     handleSubmit,
@@ -104,13 +103,7 @@ export function Login() {
             />
             <button
               className="btn-link min-h-[44px] cursor-pointer text-sm"
-              onClick={() =>
-                setAlert({
-                  variant: "info",
-                  message:
-                    "Password reset isn't live yet - the POST /auth/forgot-password endpoint and the reset screen are the next phase.",
-                })
-              }
+              onClick={() => navigate("/forgot-password")}
               type="button"
             >
               Forgot password?

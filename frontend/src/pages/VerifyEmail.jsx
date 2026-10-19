@@ -9,7 +9,7 @@ import { OtpInput } from "../components/OtpInput";
 import { useCountdown } from "../hooks/useCountdown";
 import { resendVerificationCode, toAuthErrorMessage, verifyEmail } from "../services/authService";
 import { useAuth } from "../store/auth";
-import { validateOtp } from "../utils/validation";
+import { OTP_TTL_SECONDS, validateOtp } from "../utils/validation";
 
 const RESEND_COOLDOWN = 60;
 
@@ -22,20 +22,39 @@ export function VerifyEmail() {
   const [alert, setAlert] = useState(null);
   const [verified, setVerified] = useState(false);
   const [secondsLeft, startCooldown] = useCountdown();
+  const [expiryLeft, startExpiry] = useCountdown();
+  const [expiryStarted, setExpiryStarted] = useState(false);
+  const expired = expiryStarted && expiryLeft === 0;
 
   useEffect(() => {
     if (!email) navigate("/signup", { replace: true });
   }, [email, navigate]);
+
+  // The signup call that landed us here just sent a code, so its minute starts now.
+  useEffect(() => {
+    startExpiry(OTP_TTL_SECONDS);
+    setExpiryStarted(true);
+  }, [startExpiry]);
 
   const verify = useMutation({
     mutationFn: (value) => verifyEmail({ email, code: value }),
     onSuccess: () => setVerified(true),
   });
 
+  useEffect(() => {
+    if (expired) {
+      setCode("");
+      setFieldError(undefined);
+      verify.reset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expired]);
+
   const resend = useMutation({
     mutationFn: () => resendVerificationCode({ email }),
     onSuccess: () => {
       startCooldown(RESEND_COOLDOWN);
+      startExpiry(OTP_TTL_SECONDS);
       setCode("");
       setFieldError(undefined);
       verify.reset();
@@ -111,16 +130,24 @@ export function VerifyEmail() {
 
           <div>
             <OtpInput
-              disabled={verifying}
+              disabled={verifying || expired}
               error={fieldError}
               onChange={handleChange}
               onComplete={runVerify}
               value={code}
             />
-            {fieldError ? <p className="auth-error">{fieldError}</p> : null}
+            {fieldError ? (
+              <p className="auth-error">{fieldError}</p>
+            ) : (
+              <p className={`mt-1.5 text-xs font-medium ${expired ? "text-rose-300" : "text-slate-400"}`}>
+                {expired
+                  ? "This code has expired. Resend a new one."
+                  : `The code expires in ${expiryLeft}s.`}
+              </p>
+            )}
           </div>
 
-          <AuthButton loading={verifying}>
+          <AuthButton disabled={expired} loading={verifying}>
             {verifying ? "Verifying..." : "Verify Email"}
           </AuthButton>
         </form>

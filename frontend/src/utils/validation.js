@@ -40,6 +40,8 @@ export function validateCheckbox(accepted) {
 }
 
 export const OTP_LENGTH = 6;
+/** Codes are only accepted for one minute; after that a fresh one is needed. */
+export const OTP_TTL_SECONDS = 60;
 
 export function validateOtp(value) {
   const code = String(value ?? "").trim();
