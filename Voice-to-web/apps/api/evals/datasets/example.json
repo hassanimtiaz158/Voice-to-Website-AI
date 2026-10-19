@@ -1,4 +1,0 @@
-[
-  {"id": "add-health-endpoint", "repo_fixture": "fixtures/fastapi-min", "request": "Add a /health endpoint",
-   "checks": ["tests_pass", "diff_lines<50"]}
-]
