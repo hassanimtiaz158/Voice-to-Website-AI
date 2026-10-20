@@ -1,0 +1,38 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.core.config import settings
+
+app = FastAPI(
+    title="Voice-to-Website AI Gateway",
+    description="Enterprise Autonomous Web Generation & Human Deployment Platform",
+    version="0.1.0",
+)
+
+# CORS Middleware Configuration
+origins = settings.cors_origins if settings.cors_origins else ["http://localhost:5173"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/healthz", summary="Health Check")
+async def healthz():
+    """Health check endpoint returning system status."""
+    return {"status": "ok"}
+
+
+@app.get("/", summary="API Root")
+async def root():
+    """Root info endpoint."""
+    return {
+        "service": "Voice-to-Website AI",
+        "version": "0.1.0",
+        "status": "online",
+        "docs": "/docs",
+    }

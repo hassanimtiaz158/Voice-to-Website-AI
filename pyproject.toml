@@ -1,0 +1,13 @@
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["contracts/tests", "backend/tests"]
+pythonpath = [".", "backend"]
+
+[tool.black]
+line-length = 120
+target-version = ["py311"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+warn_unused_ignores = true

@@ -4,19 +4,15 @@ from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-
-
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     env: str = "dev"  # dev | staging | production | test
-    database_url: str = "postgresql+asyncpg://codepilot:codepilot@localhost:5432/codepilot"
-    jwt_secret: str = ""
+    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/voicetoai_db"
+    jwt_secret: str = "voicetoai_super_secret_development_key_32_characters_minimum"
     jwt_algorithm: str = "HS256"
-    access_token_minutes: int = 15
-    refresh_token_days: int = 7
-    # "lax" works when frontend and API share a registrable domain (app.x.com + api.x.com, or localhost).
-    # Use "none" only if they are on different domains (needs HTTPS).
+    access_token_minutes: int = 60
+    refresh_token_days: int = 30
     cookie_samesite: Literal["lax", "strict", "none"] = "lax"
     cors_origins: list[str] = ["http://localhost:5173"]
 
