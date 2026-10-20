@@ -1,0 +1,52 @@
+name: Continuous Integration (CI)
+
+on:
+  pull_request:
+    branches: [main, dev, Voice_Pipeline]
+  push:
+    branches: [main, dev, Voice_Pipeline]
+
+jobs:
+  contracts-and-backend:
+    name: Contracts & Backend Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+
+      - name: Run Contract & Backend Tests
+        run: |
+          pytest -v
+
+  frontend-build:
+    name: Frontend Lint & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm run build

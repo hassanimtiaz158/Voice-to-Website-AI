@@ -1,0 +1,48 @@
+{
+  "business": {
+    "name": "Bespoke Apparel & Leather",
+    "type": "Retail & Ecommerce",
+    "locale": "en",
+    "tagline": "Handcrafted perfection in every stitch"
+  },
+  "palette": {
+    "primary": "#1E3A8A",
+    "secondary": "#F59E0B",
+    "background": "#FFFFFF",
+    "text": "#111827"
+  },
+  "navigation": [
+    { "label": "Home", "target": "#hero" },
+    { "label": "Features", "target": "#features" },
+    { "label": "Products", "target": "#products" },
+    { "label": "Contact", "target": "#contact" }
+  ],
+  "hero": {
+    "headline": "Crafted with Heritage & Precision",
+    "subheadline": "Explore Lahore's finest handcrafted leather goods, custom tailored apparel, and timeless accessories.",
+    "ctaText": "Explore Collection",
+    "secondaryCtaText": "Order on WhatsApp"
+  },
+  "features": [
+    {
+      "title": "Authentic Materials",
+      "description": "100% full-grain leather sourced responsibly and tanned using natural methods.",
+      "icon": "ShieldCheck"
+    },
+    {
+      "title": "Nationwide Delivery",
+      "description": "Fast express shipping across Pakistan with Cash on Delivery (COD) available.",
+      "icon": "Truck"
+    },
+    {
+      "title": "Instant Support",
+      "description": "Direct WhatsApp assistance for custom sizing and order inquiries.",
+      "icon": "MessageCircle"
+    }
+  ],
+  "contact": {
+    "phone": "+92 300 1234567",
+    "email": "contact@lahoreleather.com",
+    "address": "Anarkali Bazaar, Lahore, Pakistan"
+  }
+}

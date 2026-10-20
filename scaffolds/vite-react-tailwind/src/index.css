@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-primary: #1e3a8a;
+  --brand-secondary: #f59e0b;
+  --brand-bg: #ffffff;
+  --brand-text: #111827;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: var(--brand-text);
+  background-color: var(--brand-bg);
+}
