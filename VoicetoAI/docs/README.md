@@ -10,7 +10,36 @@ Every verified version is version-controlled via GitHub commits (`v1`, `v2`, ...
 
 ---
 
-## Master Documentation Catalog
+## 🚀 START HERE: Phase-by-Phase Implementation Guide
+
+If you are looking for which phase to work on first and what comes next:
+👉 **Open [00_START_HERE_PHASE_GUIDE.md](file:///d:/VoicetoAI/docs/00_START_HERE_PHASE_GUIDE.md)**
+
+All 20 individual phase documents are located in the [docs/PHASES/](file:///d:/VoicetoAI/docs/PHASES) folder:
+- **Phase 1:** [PHASE_01_Repo_Setup_and_Contracts.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_01_Repo_Setup_and_Contracts.md)
+- **Phase 2:** [PHASE_02_Postgres_and_pgvector.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_02_Postgres_and_pgvector.md)
+- **Phase 3:** [PHASE_03_S3_Storage_and_Audio_Validation.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_03_S3_Storage_and_Audio_Validation.md)
+- **Phase 4:** [PHASE_04_Whisper_ASR_and_Transcript.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_04_Whisper_ASR_and_Transcript.md)
+- **Phase 5:** [PHASE_05_VAD_and_Audio_Streaming.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_05_VAD_and_Audio_Streaming.md)
+- **Phase 6:** [PHASE_06_Scaffold_and_Sandbox_Runner.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_06_Scaffold_and_Sandbox_Runner.md)
+- **Phase 7:** [PHASE_07_LangGraph_and_Checkpointer.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_07_LangGraph_and_Checkpointer.md)
+- **Phase 8:** [PHASE_08_Router_and_Clarifier_Agent.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_08_Router_and_Clarifier_Agent.md)
+- **Phase 9:** [PHASE_09_Architectural_Planner_Agent.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_09_Architectural_Planner_Agent.md)
+- **Phase 10:** [PHASE_10_Sequential_Coder_Agent.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_10_Sequential_Coder_Agent.md)
+- **Phase 11:** [PHASE_11_Playwright_Verifier_Node.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_11_Playwright_Verifier_Node.md)
+- **Phase 12:** [PHASE_12_Fixer_Agent_Self_Healing.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_12_Fixer_Agent_Self_Healing.md)
+- **Phase 13:** [PHASE_13_GitHub_MCP_Committer.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_13_GitHub_MCP_Committer.md)
+- **Phase 14:** [PHASE_14_File_Manifest_pgvector_Locator.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_14_File_Manifest_pgvector_Locator.md)
+- **Phase 15:** [PHASE_15_Surgical_Editor_and_Rollback.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_15_Surgical_Editor_and_Rollback.md)
+- **Phase 16:** [PHASE_16_Auth_RBAC_and_Quotas.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_16_Auth_RBAC_and_Quotas.md)
+- **Phase 17:** [PHASE_17_Marketplace_and_Escrow_Ledger.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_17_Marketplace_and_Escrow_Ledger.md)
+- **Phase 18:** [PHASE_18_Observability_and_Eval_Suite.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_18_Observability_and_Eval_Suite.md)
+- **Phase 19:** [PHASE_19_Docker_Traefik_SSL_and_CICD.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_19_Docker_Traefik_SSL_and_CICD.md)
+- **Phase 20:** [PHASE_20_Hardening_Recovery_and_Ship.md](file:///d:/VoicetoAI/docs/PHASES/PHASE_20_Hardening_Recovery_and_Ship.md)
+
+---
+
+## Master Architecture Documentation Catalog
 
 | Document | File Link | Description & Key Contents |
 |---|---|---|
